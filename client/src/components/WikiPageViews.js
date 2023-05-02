@@ -1,10 +1,11 @@
 import React from 'react';
+import Heading from './Heading';
 
 const WikiPageViews = () => {
     return (
-        <div className='container'>
-            <h1>Grow Take Home</h1>
-        </div>
+        <>
+            <Heading title="Grow Take Home" />
+        </>
     )
 }
 
