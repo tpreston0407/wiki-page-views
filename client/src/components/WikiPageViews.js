@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Heading from './Heading';
-import { getArticlesByPageViewsForDate } from '../api/WikiAPI';
+import { getArticlesByPageViewsForCountryAndDate, getArticlesByPageViewsForDate } from '../api/WikiAPI';
 import DateSelect from './DateSelect';
 import TableCountSelect from './TableCountSelect';
+import CountrySelect from './CountrySelect';
 
 import ArticleView from './ArticleView';
 import { getYesterday } from '../utilities';
@@ -12,34 +13,48 @@ const WikiPageViews = () => {
     const [currentDate, setCurrentDate] = useState(getYesterday());
     const [articles, setArticles] = useState([]);
     const [tableCount, setTableCount] = useState(100);
+    const [country, setCountry] = useState('');
+    const [error, setError] = useState('');
 
-    const handleDateChange = (newDate) => {
+    const handleDateChange = ( newDate ) => {
         setCurrentDate(newDate);
     };
 
-    const handleTableCountChange = (event) => {
+    const handleTableCountChange = ( event ) => {
         setTableCount(Number(event.target.value));
     };
 
+    const handleCountryNameChange = ( event ) => {
+        setCountry(event.target.value);
+    }
+
     useEffect(() => {
-        const getArticles = async ( currentDate ) => {
+        const getArticles = async ( currentDate, country ) => {
             const day = ("0" + currentDate.getDate()).slice(-2);
             const month = ("0" + (currentDate.getMonth() + 1)).slice(-2);
             const year = currentDate.getFullYear();
 
-            let articles = await getArticlesByPageViewsForDate(day, month, year);
-            if (articles && articles.length) {
-                // We only need to store up to the maximum number of results allowed to display in state
-                const maxArticles = Math.max(...TableCountOptions);
-                const newArticles = articles.slice(0, maxArticles);
-                setArticles(newArticles);
+            try {
+                let articles = country && country.length > 0 ?
+                    await getArticlesByPageViewsForCountryAndDate(country, day, month, year)
+                    : await getArticlesByPageViewsForDate(day, month, year);
+                if (articles && articles.length) {
+                    // We only need to store up to the maximum number of results allowed to display in state
+                    const maxArticles = Math.max(...TableCountOptions);
+                    const newArticles = articles.slice(0, maxArticles);
+                    setArticles(newArticles);
+                    setError('');
+                }
+            } catch (error) {
+                console.error(error);
+                setError(error);
+                setArticles([]);
             }
         }
 
-        getArticles(currentDate)
-            .catch(console.error); // todo: display error message
-
-    }, [currentDate]);
+        console.log(`Updating list: ${country}`);
+        getArticles(currentDate, country);
+    }, [currentDate, country]);
 
     const renderArticles = () => {
         if (articles.length === undefined || articles.length <= 0) {
@@ -47,10 +62,15 @@ const WikiPageViews = () => {
         } else {
             let articleViews = []
             const totalArticles = articles.length < tableCount ? articles.length : tableCount;
-            console.log(`rendering ${totalArticles} articles`);
             for (let i = 0; i < totalArticles; i++){
                 articleViews.push(
-                    <li className='p-2'><ArticleView key={i} title={articles[i].article} viewCount={articles[i].views} /></li>
+                    <li className='p-2'>
+                        <ArticleView
+                            key={i}
+                            title={articles[i].article}
+                            viewCount={articles[i].views || articles[i].views_ceil}
+                        />
+                    </li>
                 );
             }
             return articleViews;
@@ -67,11 +87,17 @@ const WikiPageViews = () => {
                             <DateSelect labelText="Start date:" currentDate={currentDate} handleChange={handleDateChange} />
                         </div>
                         <div className='col'>
-                            <TableCountSelect labelText={"Number of Results"} currentCount={tableCount} handleChange={handleTableCountChange} />
+                            <TableCountSelect labelText="Number of Results" currentCount={tableCount} handleChange={handleTableCountChange} />
+                        </div>
+                        <div className='col'>
+                            <CountrySelect labelText="Country" currentCountry={country} handleChange={handleCountryNameChange} />
                         </div>
                     </div>
 
                     <div className='row'>
+                        {error &&
+                            <p>An error occurred. Wikipedia may not have data for your selection, or the project you asked for is not loaded yet.</p>
+                        }
                         <ul className='no-bullet'>
                             {renderArticles()}
                         </ul>

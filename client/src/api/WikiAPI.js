@@ -12,10 +12,22 @@ export const getArticlesByPageViewsForDate = async ( day, month, year ) => {
     return fetch(url)
       .then(response => response.json())
       .then(data => {
+        if (!data || !data.items) {
+            throw new Error('No data returned from Wikipedia for the given date.');
+        }
         return data?.items[0]?.articles;
-      })
-      .catch(error => {
-        console.error(error);
-        return error;
+      });
+}
+
+// Get page views by country: https://wikimedia.org/api/rest_v1/metrics/pageviews/top-per-country/${country-abbrev}/all-access/${year}/${month}/${day}
+export const getArticlesByPageViewsForCountryAndDate = async ( countryAbbrev, day, month, year ) => {
+    const url = `https://wikimedia.org/api/rest_v1/metrics/pageviews/top-per-country/${countryAbbrev}/all-access/${year}/${month}/${day}`;
+    return fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        if (!data || !data.items) {
+            throw new Error('No data returned from Wikipedia for the given country and date.');
+        }
+        return data?.items[0]?.articles;
       });
 }

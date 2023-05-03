@@ -9,7 +9,13 @@ const DateSelect = ({ labelText, currentDate, handleChange }) => {
     return (
         <div className='container'>
             <label for='view-date'>{labelText}</label>
-            <DatePicker id='view-date' selected={currentDate} onChange={handleChange} maxDate={getYesterday()} />
+            <DatePicker
+                id='view-date'
+                className='date-select'
+                selected={currentDate}
+                onChange={handleChange}
+                maxDate={getYesterday()}
+            />
         </div>
     );
 }

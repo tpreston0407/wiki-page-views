@@ -3,13 +3,23 @@
     height: 50px;
 }
 
+.date-select {
+    display: flex;
+    width: 125px;
+}
+
 .table-select {
-    display: block;
-    width: 50px;
+    display: flex;
+
+}
+
+.country-select {
+    display: flex;
+    width: 125px;
 }
 
 .article-list {
-    max-width: 500px;
+    max-width: 550px;
 }
 
 .no-bullet {
