@@ -2,3 +2,41 @@
     background-color: #d3d3d36a;
     height: 50px;
 }
+
+.table-select {
+    display: block;
+    width: 50px;
+}
+
+.article-list {
+    max-width: 500px;
+}
+
+.no-bullet {
+    list-style-type: none;
+}
+
+
+.article-view {
+    border-radius: 10px;
+    border-bottom: 2px solid #d3d3d36a;
+    border-left: 1px solid #d3d3d36a;
+    border-right: 1px solid #d3d3d36a;
+    border-top: 0.5px solid #d3d3d36a;
+    width: 125px;
+    height: 100px;
+}
+
+.article-content {
+    height: 100%;
+}
+
+.article-title {
+    flex: 1;
+    text-align: center;
+}
+
+.article-count {
+    flex: 1;
+    text-align: center;
+}

@@ -1,0 +1,1 @@
+export const TableCountOptions = [25, 50, 75, 100, 200];
