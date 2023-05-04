@@ -8,7 +8,7 @@ import { getYesterday } from '../utilities';
 const DateSelect = ({ labelText, currentDate, handleChange }) => {
     return (
         <div className='container'>
-            <label for='view-date'>{labelText}</label>
+            <label htmlFor='view-date'>{labelText}</label>
             <DatePicker
                 id='view-date'
                 className='date-select'

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { getAllCountries } from '../api/Countries';
+import { getAllCountries, getCountryListFromCountries } from '../api/Countries';
 
 const CountrySelect = ({ labelText, currentCountry, handleChange }) => {
     const [countryList, setCountryList] = useState([]);
@@ -8,7 +8,7 @@ const CountrySelect = ({ labelText, currentCountry, handleChange }) => {
     useEffect(() => {
         const getCountries = async () => {
             const countries = await getAllCountries();
-            setCountryList(countries);
+            setCountryList(getCountryListFromCountries(countries));
         }
 
         if (countryList.length <= 0) {
@@ -20,7 +20,7 @@ const CountrySelect = ({ labelText, currentCountry, handleChange }) => {
 
     return (
         <div className='container'>
-            <label for='country-select'>{labelText}</label>
+            <label htmlFor='country-select'>{labelText}</label>
             <select id='country-select' className='country-select' value={currentCountry} onChange={handleChange}>
                 <option key='empty' value=''></option>
                 {

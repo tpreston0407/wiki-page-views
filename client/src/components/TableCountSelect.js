@@ -5,7 +5,7 @@ import { TableCountOptions } from '../constants';
 const TableCountSelect = ({ labelText, currentCount, handleChange }) => {
     return (
         <div className='container'>
-            <label for='table-count'>{labelText}</label>
+            <label htmlFor='table-count'>{labelText}</label>
             <select id='table-count' className='table-select' value={currentCount} onChange={handleChange}>
             {
                 TableCountOptions.map((count) => {

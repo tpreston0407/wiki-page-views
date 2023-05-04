@@ -52,24 +52,27 @@ const WikiPageViews = () => {
             }
         }
 
-        console.log(`Updating list: ${country}`);
         getArticles(currentDate, country);
     }, [currentDate, country]);
 
     const renderArticles = () => {
         if (articles.length === undefined || articles.length <= 0) {
-            return <p>Could not find Wikipedia articles for the given date.</p>
+            return <p data-testid="no-articles">Could not find Wikipedia articles for the given date.</p>
         } else {
             let articleViews = []
             const totalArticles = articles.length < tableCount ? articles.length : tableCount;
             for (let i = 0; i < totalArticles; i++){
                 articleViews.push(
-                    <li className='p-2'>
-                        <ArticleView
-                            key={i}
-                            title={articles[i].article}
-                            viewCount={articles[i].views || articles[i].views_ceil}
-                        />
+                    <li
+                        className='p-2'
+                        data-testid={`article-item-${i}`}
+                        key={`article-item-${i}`}
+                    >
+                            <ArticleView
+                                key={i}
+                                title={articles[i].article}
+                                viewCount={articles[i].views || articles[i].views_ceil}
+                            />
                     </li>
                 );
             }
