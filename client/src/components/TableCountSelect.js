@@ -6,7 +6,7 @@ const TableCountSelect = ({ labelText, currentCount, handleChange }) => {
     return (
         <div className='container'>
             <label htmlFor='table-count'>{labelText}</label>
-            <select id='table-count' className='table-select' value={currentCount} onChange={handleChange}>
+            <select id='table-count' className='row-count-select' value={currentCount} onChange={handleChange}>
             {
                 TableCountOptions.map((count) => {
                     return <option key={count}>{count}</option>

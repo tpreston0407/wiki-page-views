@@ -1,40 +1,40 @@
 .heading {
-    background-color: #d3d3d36a;
-    height: 50px;
+    background-color: #e0dfdf6a;
+    height: 3rem;
 }
 
 .date-select {
     display: flex;
-    width: 125px;
+    width: 8rem;
 }
 
-.table-select {
+.row-count-select {
     display: flex;
-
+    height: 2rem;
 }
 
 .country-select {
     display: flex;
-    width: 125px;
+    width: 9rem;
+    height: 2rem;
 }
 
 .article-list {
-    max-width: 550px;
+    max-width: 90%;
 }
 
 .no-bullet {
     list-style-type: none;
 }
 
-
 .article-view {
-    border-radius: 10px;
-    border-bottom: 2px solid #d3d3d36a;
-    border-left: 1px solid #d3d3d36a;
-    border-right: 1px solid #d3d3d36a;
-    border-top: 0.5px solid #d3d3d36a;
-    width: 125px;
-    height: 100px;
+    border-radius: 0.6rem;
+    border-bottom: 0.2rem solid;
+    border-left: 0.1rem solid;
+    border-right: 0.1rem solid;
+    border-top: 0.05rem solid;
+    border-color: #4847476a;
+    height: 6rem;
 }
 
 .article-content {
@@ -49,4 +49,5 @@
 .article-count {
     flex: 1;
     text-align: center;
+    font-size: 0.9rem;
 }

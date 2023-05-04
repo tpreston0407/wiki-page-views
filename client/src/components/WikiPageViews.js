@@ -4,7 +4,6 @@ import { getArticlesByPageViewsForCountryAndDate, getArticlesByPageViewsForDate 
 import DateSelect from './DateSelect';
 import TableCountSelect from './TableCountSelect';
 import CountrySelect from './CountrySelect';
-
 import ArticleView from './ArticleView';
 import { getYesterday } from '../utilities';
 import { TableCountOptions } from '../constants';
@@ -29,7 +28,9 @@ const WikiPageViews = () => {
     }
 
     useEffect(() => {
+        // Load/re-load articles if date or selected country changes
         const getArticles = async ( currentDate, country ) => {
+            // The wiki api needs day and month formatted w/ 2 digits
             const day = ("0" + currentDate.getDate()).slice(-2);
             const month = ("0" + (currentDate.getMonth() + 1)).slice(-2);
             const year = currentDate.getFullYear();
@@ -46,6 +47,7 @@ const WikiPageViews = () => {
                     setError('');
                 }
             } catch (error) {
+                // Set error state so we can display a message to the user
                 console.error(error);
                 setError(error);
                 setArticles([]);

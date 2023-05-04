@@ -6,8 +6,8 @@ const ArticleView = ({ title, viewCount }) => {
     return (
         <div className='container article-view'>
             <div className='d-flex justify-content-center align-items-center article-content'>
-                <div className='align-self-center article-title'>
-                    {title}
+                <div className='align-self-center article-title text-truncate'>
+                    <strong>{title}</strong>
                 </div>
                 <div className='align-self-center article-count'>
                     Views: <br />{viewCount}
